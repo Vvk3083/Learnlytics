@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Table</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Student Profile</h1>
+    <tr>
+        <td><%= student.name %></td>
+        <td><%= student.Email || "N/A" %></td>
+        <td><%= student.PhoneNumber || "N/A" %></td>
+        <td><%= student.CodeforcesHandle %></td>
+        <td><%= student.CurrentRating %></td>
+        <td><%= student.MaxRating %></td>
+        <!-- don't forget to link this to the ./student/:id thing -->
+        <td><button><a href="/students/:{CodeforcesHandle}"></a>View</button></td>
+    </tr>
+</body>
+</html>

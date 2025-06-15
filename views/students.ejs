@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Table</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Student Progress Table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Codeforces Handle</th>
+                <th>Current Rating</th>
+                <th>Max Rating</th>
+                <th>More Actions/th>
+            </tr>
+        </thead>
+        <tbody>
+            <% students.forEach(student => { %>
+                <tr>
+                    <td><%= student.name %></td>
+                    <td><%= student.Email || "N/A" %></td>
+                    <td><%= student.PhoneNumber || "N/A" %></td>
+                    <td><%= student.CodeforcesHandle %></td>
+                    <td><%= student.CurrentRating %></td>
+                    <td><%= student.MaxRating %></td>
+                    <!-- don't forget to link this to the ./student/:id thing -->
+                    <td><button><a href="/students/<%= student.CodeforcesHandle %>">View</a></button></td>
+                    <!-- <td><button><a href="/students/:${student.CodeforcesHandle}">View</a></button></td> -->
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
