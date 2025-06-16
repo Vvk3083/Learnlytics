@@ -39,7 +39,6 @@ app.get('/', (req, res) => {
 
 app.get('/api/students', async (req, res) => {
     // const handle = req.params.handle;
-
     try {
         const response = await axios.get(`https://codeforces.com/api/user.info?handles=vivek30032005`);
         const obj = response.data.result[0];
@@ -76,8 +75,8 @@ app.get('/students', async (req, res) => {
 });
 app.get('/students/:CodeforcesHandle', async (req, res) => {
     try {
-        // const response = await axios.get(`https://codeforces.com/api/user.rating?handle=${req.params.CodeforcesHandle}`);
-        const response = await axios.get(`https://codeforces.com/api/user.rating?handle=tic_tac`);
+        const response = await axios.get(`https://codeforces.com/api/user.rating?handle=${req.params.CodeforcesHandle}`);
+        // const response = await axios.get(`https://codeforces.com/api/user.rating?handle=tic_tac`);
         const response2 = await axios.get(`https://codeforces.com/api/user.status?handle=${req.params.CodeforcesHandle}`);
         const obj = response.data.result;
         const obj2 = response2.data.result; 
@@ -89,11 +88,27 @@ app.get('/students/:CodeforcesHandle', async (req, res) => {
         console.log(solved_problem);
         const objectfiltered = [];
         objectfiltered.push(0);
+        let average = 0;
         for(const ob of obj){
             objectfiltered.push(ob.newRating);
+            average = average + ob.newRating;
         }
+        average = Math.round(average / objectfiltered.length);
+        console.log(average);
+        const mp = new Map();
+        for (const ob of obj2) {
+            if (ob.problem.rating && ob.verdict === 'OK') {
+                const rating = ob.problem.rating;
+                mp.set(rating, (mp.get(rating) || 0) + 1);
+            }
+        }
+        const barChartData = Array.from(mp.entries());
         console.log(objectfiltered);
-        res.render('chart', { objectfiltered });
+        // res.render('chart', {
+        //     objectfiltered: objectfiltered.map(ob => ob.newRating), // your original rating graph data
+        //     barChartData
+        // });
+        res.render('chart', { objectfiltered,barChartData });
     } catch (error) {
         res.status(500).send("Error fetching student details");
     }
