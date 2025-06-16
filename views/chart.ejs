@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Codeforces Rating Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const objectfiltered = <%= JSON.stringify(objectfiltered) %>;
+
+            if (!objectfiltered || objectfiltered.length === 0) {
+                console.error("Ratings data is empty or undefined");
+                return;
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: objectfiltered.map((_, index) => index),
+                    datasets: [{
+                        label: 'Ratings Graph',
+                        data: objectfiltered,
+                        borderColor: 'blue',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

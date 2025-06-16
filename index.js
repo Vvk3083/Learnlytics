@@ -76,15 +76,24 @@ app.get('/students', async (req, res) => {
 });
 app.get('/students/:CodeforcesHandle', async (req, res) => {
     try {
-        const response = await axios.get(`https://codeforces.com/api/user.rating?handle=${req.params.CodeforcesHandle}`);
-        // https://codeforces.com/api/user.rating?handle=vivek30032005
+        // const response = await axios.get(`https://codeforces.com/api/user.rating?handle=${req.params.CodeforcesHandle}`);
+        const response = await axios.get(`https://codeforces.com/api/user.rating?handle=tic_tac`);
         const response2 = await axios.get(`https://codeforces.com/api/user.status?handle=${req.params.CodeforcesHandle}`);
-        // https://codeforces.com/api/user.status?handle=Fefer_Ivan&from=1&count=10
         const obj = response.data.result;
         const obj2 = response2.data.result; 
-        console.log(obj);
-        console.log(obj2);
-        res.send({obj,obj2});
+        // console.log(obj2);
+        let solved_problem = 0;
+        for(const ob of obj2){
+            if(ob.verdict === 'OK') solved_problem++;
+        }
+        console.log(solved_problem);
+        const objectfiltered = [];
+        objectfiltered.push(0);
+        for(const ob of obj){
+            objectfiltered.push(ob.newRating);
+        }
+        console.log(objectfiltered);
+        res.render('chart', { objectfiltered });
     } catch (error) {
         res.status(500).send("Error fetching student details");
     }

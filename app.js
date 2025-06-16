@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const connectDB = require('./config/db');
 const studentRoutes = require('./routes/studentRoutes');
-
+require(path.join(__dirname, 'models/user.js'));
 const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
