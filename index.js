@@ -5,7 +5,8 @@ const ejs = require('ejs');
 const app = express();
 const path = require('path');
 const csv = require('csv-writer').createObjectCsvWriter;
-
+const dotenv = require('dotenv');
+dotenv.config();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,12 +15,9 @@ app.set('views', path.join(__dirname, 'views'));
 
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/SPMS", {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+        await mongoose.connect(`mongodb+srv://${process.env.user}:${process.env.password}@${process.env.cluster}.mongodb.net/SPMS?retryWrites=true&w=majority`);
         console.log("MongoDB Connected");
-    } catch (error) {
+    } catch (error) { 
         console.error("MongoDB Connection Error:", error.message);
         process.exit(1);
     }
