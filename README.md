@@ -2,6 +2,20 @@
 
 A comprehensive web application for tracking and analyzing student progress in competitive programming, specifically designed for Codeforces users.
 
+---
+
+## 🚀 Live Demo & Landing Page
+
+- The root route `/` now features a modern, welcoming landing page with:
+  - App name and description
+  - Total students count (live from your database)
+  - Navigation buttons: View Students, Add Student, Download CSV, GitHub
+
+**Example:**
+![Landing Page Screenshot](docs/landing-page.png)
+
+---
+
 ## Features
 
 ### Student Table View
@@ -36,6 +50,8 @@ Comprehensive analysis dashboard with two main sections:
 - **Rating Distribution Chart**: Bar chart showing problems solved by rating buckets
 - **Submission Heatmap**: GitHub-style activity heatmap showing daily submission patterns
 
+---
+
 ## Technology Stack
 
 - **Backend**: Node.js with Express.js
@@ -45,6 +61,8 @@ Comprehensive analysis dashboard with two main sections:
 - **External API**: Codeforces API for user data
 - **HTTP Client**: Axios for API requests
 - **CSV Export**: csv-writer for data export
+
+---
 
 ## Installation
 
@@ -77,9 +95,27 @@ Comprehensive analysis dashboard with two main sections:
    - Open your browser and navigate to `http://localhost:3000`
    - Go to `/students` to view the student management interface
 
+---
+
+## Deployment on Render
+
+1. **Push your code to GitHub**
+2. **Create a free MongoDB Atlas cluster** and get your connection string
+3. **Go to [https://dashboard.render.com](https://dashboard.render.com)**
+4. **Create a new Web Service**
+   - Connect your GitHub repo
+   - Set build command: `npm install`
+   - Set start command: `npm start`
+   - Add environment variable: `MONGODB_URI` = your MongoDB Atlas URI
+5. **Deploy!**
+6. **Visit your Render URL** (e.g., `https://your-app.onrender.com`)
+
+---
+
 ## API Endpoints
 
-### Student Management
+### Main UI
+- `GET /` - Modern landing page with navigation and stats
 - `GET /students` - View all students
 - `GET /students/add` - Add new student form
 - `POST /students/add` - Create new student
@@ -87,12 +123,15 @@ Comprehensive analysis dashboard with two main sections:
 - `POST /students/edit/:id` - Update student
 - `POST /students/delete/:id` - Delete student
 - `GET /students/download-csv` - Download student data as CSV
-
-### Student Profiles
 - `GET /students/:CodeforcesHandle` - View detailed student profile with filtering options
+
+### Health Check
+- `GET /route` - Returns a JSON health/status message
 
 ### Legacy API
 - `GET /api/students` - Legacy endpoint for adding hardcoded user
+
+---
 
 ## Data Model
 
@@ -110,6 +149,8 @@ Comprehensive analysis dashboard with two main sections:
   Organization: String
 }
 ```
+
+---
 
 ## Features in Detail
 
@@ -130,6 +171,8 @@ Comprehensive analysis dashboard with two main sections:
 - **Bar Charts**: Problem distribution by rating
 - **Heatmaps**: Daily submission activity
 - **Color-coded Ratings**: Visual rating indicators
+
+---
 
 ## Usage Examples
 
@@ -153,12 +196,16 @@ Comprehensive analysis dashboard with two main sections:
 1. From the student table, click "Download CSV"
 2. The file will be automatically downloaded with all student data
 
+---
+
 ## Configuration
 
 The application uses the following default configuration:
 - **Port**: 3000
 - **Database**: MongoDB at `mongodb://127.0.0.1:27017/SPMS`
 - **External API**: Codeforces API
+
+---
 
 ## Dependencies
 
@@ -172,6 +219,8 @@ The application uses the following default configuration:
 ### Development Dependencies
 - `nodemon`: Auto-restart for development
 
+---
+
 ## Contributing
 
 1. Fork the repository
@@ -180,9 +229,13 @@ The application uses the following default configuration:
 4. Test thoroughly
 5. Submit a pull request
 
+---
+
 ## License
 
 This project is licensed under the ISC License.
+
+---
 
 ## Support
 

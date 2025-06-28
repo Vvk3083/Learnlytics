@@ -55,8 +55,9 @@ const filterByDateRange = (data, startDate, endDate) => {
     });
 };
 
-app.get('/', (req, res) => {
-    res.send("Student Progress Management System API");
+app.get('/', async (req, res) => {
+    const totalStudents = await User.countDocuments();
+    res.render('home', { totalStudents });
 });
 
 // Get all students with CRUD operations
