@@ -129,13 +129,7 @@ app.get('/students/:CodeforcesHandle', async (req, res) => {
         //     objectfiltered: objectfiltered.map(ob => ob.newRating), // your original rating graph data
         //     barChartData
         // });
-        res.render('chart', { objectfiltered,
-                                barChartData,
-                                solved_problem,
-                                average,
-                                handle: req.params.CodeforcesHandle
-                            }
-        );
+        res.render('chart', { objectfiltered,barChartData });
     } catch (error) {
         res.status(500).send("Error fetching student details");
     }

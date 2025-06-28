@@ -1,55 +1,5 @@
+
 <!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Codeforces Rating Chart</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-
-<body>
-    <div>
-        <canvas id="myChart"></canvas>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const ctx = document.getElementById('myChart').getContext('2d');
-            const objectfiltered = <%= JSON.stringify(objectfiltered) %>;
-
-            if (!objectfiltered || objectfiltered.length === 0) {
-                console.error("Ratings data is empty or undefined");
-                return;
-            }
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: objectfiltered.map((_, index) => index),
-                    datasets: [{
-                        label: 'Ratings Graph',
-                        data: objectfiltered,
-                        borderColor: 'blue',
-                        borderWidth: 2,
-                        fill: false,
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: false
-                        }
-                    }
-                }
-            });
-        });
-    </script>
-
-</body>
-</html> -->
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -142,4 +92,120 @@
         });
     </script>
 </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Codeforces Stats Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .stats {
+            margin-bottom: 30px;
+            background: #f3f3f3;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .stats p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        canvas {
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Codeforces User Insights</h1>
+
+    <div class="stats">
+        <p><strong>Codeforces Handle:</strong> <%= handle %></p>
+        <p><strong>Total Problems Solved:</strong> <%= solved_problem %></p>
+        <p><strong>Average Contest Rating:</strong> <%= average %></p>
+    </div>
+
+    <h2>Ratings Graph</h2>
+    <canvas id="myChart"></canvas>
+
+    <h2>Problem Count by Rating</h2>
+    <canvas id="barChart"></canvas>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const objectfiltered = <%= JSON.stringify(objectfiltered) %>;
+
+            const lineCtx = document.getElementById('myChart').getContext('2d');
+            new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: objectfiltered.map((_, index) => index),
+                    datasets: [{
+                        label: 'Ratings Graph',
+                        data: objectfiltered,
+                        borderColor: 'blue',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+            const barChartData = new Map(<%- JSON.stringify(barChartData) %>);
+            const barLabels = [], barValues = [];
+
+            for (const [rating, count] of barChartData) {
+                barLabels.push(rating);
+                barValues.push(count);
+            }
+
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: barLabels,
+                    datasets: [{
+                        label: 'Problem Count by Rating',
+                        data: barValues,
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
 </html>
